@@ -15,7 +15,7 @@ const fs = require("fs").promises;
 var app = express();
 
 // Define the port as either port number specified in environment or use default 3000
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 
 // Set up static file serving middleware to serve files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
