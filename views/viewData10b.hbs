@@ -1,0 +1,64 @@
+<!-- views/viewData.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Data</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #0066cc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .highlight-zero {
+            background-color: #ffcccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sales Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Invoice No</th>
+                <th>Branch</th>
+                <th>City</th>
+                <th>Customer type</th>
+                <th>Product line</th>
+                <th>Name</th>
+                <th>Rating</th>
+                <!-- Add other column headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            {{#each salesData}}
+                {{> tableRow invoiceID=this.[Invoice ID] branch=this.Branch city=this.City customerType=this.[Customer type] productLine=this.[Product line] name=this.name rating=this.Rating}}
+            {{/each}}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            color: #0066cc;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            border: 1px solid #ddd;
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .no-results {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+    {{#if products.length}}
+        <ul>
+            {{#each products}}
+                <li>
+                    <strong>Invoice ID:</strong> {{this.[Invoice ID]}}<br>
+                    <strong>Branch:</strong> {{this.Branch}}<br>
+                    <strong>City:</strong> {{this.City}}<br>
+                    <strong>Customer type:</strong> {{this.[Customer type]}}<br>
+                    <strong>Product line:</strong> {{this.[Product line]}}<br>
+                    <strong>Name:</strong> {{this.name}}<br>
+                    {{!-- <img src="{{this.image}}" alt="{{this.name}}" style="max-width: 200px; max-height: 200px;"><br> --}}
+                    <strong>Unit price:</strong> {{this.[Unit price]}}<br>
+                    <strong>Quantity:</strong> {{this.Quantity}}<br>
+                    <strong>Tax 5%:</strong> {{this.[Tax 5%]}}<br>
+                    <strong>Total:</strong> {{this.Total}}<br>
+                    <strong>Date:</strong> {{this.Date}}<br>
+                    <strong>Time:</strong> {{this.Time}}<br>
+                    <strong>Payment:</strong> {{this.Payment}}<br>
+                    <strong>COGS:</strong> {{this.cogs}}<br>
+                    <strong>Gross income:</strong> {{this.[gross income]}}<br>
+                    <strong>Rating:</strong> {{this.Rating}}<br>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <div class="no-results">
+            <p>No matching products found for the provided Product Line</p>
+        </div>
+    {{/if}}
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!-- views/searchInvoiceIDResult.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Results</title>
+  <link rel="stylesheet" href="/path/to/your/custom.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    h1 {
+      color: #3498db;
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 0 0 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s;
+    }
+
+    li:hover {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    strong {
+      color: #3498db;
+    }
+
+    .no-results {
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive Design */
+    @media only screen and (max-width: 600px) {
+      li {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Search Results</h1>
+    {{#if invoices.length}}
+      <ul>
+        {{#each invoices}}
+          <li>
+            <strong>Invoice ID:</strong> {{this.[Invoice ID]}}<br>
+            <strong>Branch:</strong> {{this.Branch}}<br>
+            <strong>City:</strong> {{this.City}}<br>
+            <strong>Customer type:</strong> {{this.[Customer type]}}<br>
+            <strong>Product line:</strong> {{this.[Product line]}}<br>
+            <strong>Name:</strong> {{this.name}}<br>
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <div class="no-results">
+        <p>No matching invoices found for the provided Invoice ID</p>
+      </div>
+    {{/if}}
+  </div>
+</body>
+</html>
