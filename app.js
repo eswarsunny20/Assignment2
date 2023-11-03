@@ -19,6 +19,7 @@ const port = process.env.PORT || 3000;
 
 // Set up static file serving middleware to serve files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
+app.set("views", path.join(__dirname, "views"));
 app.use("/public", express.static("public"));
 
 //Setting Express-handlebars as the template engine
