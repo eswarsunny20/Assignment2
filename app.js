@@ -10,6 +10,7 @@
 var express = require("express");
 var path = require("path");
 const fs = require("fs").promises;
+const handlebars = require("handlebars");
 
 // Creating an Express application
 var app = express();
@@ -18,8 +19,8 @@ var app = express();
 const port = process.env.PORT || 3000;
 
 // Set up static file serving middleware to serve files from the 'public' directory
-app.use(express.static(path.join(__dirname, "public")));
-app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public"))); // to access static files
+app.set("views", path.join(__dirname, "views")); // for Vercel.json made this folder public
 app.use("/public", express.static("public"));
 
 //Setting Express-handlebars as the template engine
@@ -27,19 +28,19 @@ const exphbs = require("express-handlebars");
 const hbs = exphbs.create({
   extname: ".hbs",
   helpers: {
-    jsonPrettyPrint: function (jsonData) {
+    jsonPrettyPrint: function (jsonData) {//JSON data with formatting
       return JSON.stringify(jsonData, null, 2);
     },
-    highlightZeroRating: function (rating) {
+    highlightZeroRating: function (rating) {//apply the "zero" class to ratings when they are 0.
       return rating === 0 ? "zero" : rating;
     },
-    eq: function (a, b) {
+    eq: function (a, b) {// check if two values are equal
       return a === b;
     },
   },
 });
-app.engine("hbs", hbs.engine);
-app.set("view engine", "hbs");
+app.engine("hbs", hbs.engine);// register handlebar as templet engine
+app.set("view engine", "hbs");//setting the default view engine
 
 (async () => {
   //IIFE - Immediately Invoked Function Expression
@@ -59,16 +60,14 @@ app.set("view engine", "hbs");
 
 app.get("/data", async (req, res) => {
   try {
-    // Log data to console (optional)
-    //   console.log(jsonData);
-
-    // Render the 'data.hbs' view and pass jsonData to it
+    console.log(jsonData);
     res.render("data", { title: "Data Page", jsonData: jsonData });
   } catch (error) {
     console.error("Error rendering 'data' view:", error);
     res.status(500).send("Internal Server Error");
   }
 });
+
 // New route 2
 
 app.get("/data/invoiceNo/:index", async (req, res) => {
@@ -85,11 +84,7 @@ app.get("/data/invoiceNo/:index", async (req, res) => {
     const invoiceNo = jsonData[index]?.["Invoice ID"];
     console.log(invoiceNo);
     if (invoiceNo) {
-      // Render the 'invoiceNo.hbs' view and pass data to it
-      const renderedHtml = await hbs.render(
-        path.join(__dirname, "views", "invoiceNo.hbs"),
-        { title: "Invoice Number Page", index: index, invoiceNo: invoiceNo }
-      );
+      const renderedHtml = await hbs.render("views/invoiceNo.hbs", { title: "Invoice Number Page", index: index, invoiceNo: invoiceNo });
       res.send(renderedHtml);
     }
   } catch (error) {
@@ -100,17 +95,14 @@ app.get("/data/invoiceNo/:index", async (req, res) => {
 
 // Route 3
 app.get("/search/productLine", (req, res) => {
-  // Render the product line search form (create a separate handlebars file for this)
-  res.render("productLineSearchForm");
+  res.render("productLineSearchForm");// for ProductLine search form
 });
 
-// Handling the product line search form submission
+// Handling the product line search form after submission
 app.get("/search/productLine/result", async (req, res) => {
   try {
     const searchProductLine = req.query.productLine;
     console.log("Search Product Line:", searchProductLine);
-
-    // Assume jsonData is the array containing your second JSON data
     const matchingProducts = jsonData.filter(
       (product) => product["Product line"] === searchProductLine
     );
@@ -132,7 +124,7 @@ app.get("/search/invoiceID", async (req, res) => {
   res.render("searchInvoiceIDForm");
 });
 
-// Route to process the search and render the results
+// Handling the Invoice search form after submission
 app.get("/search/invoiceID/result", async (req, res) => {
   try {
     const searchInvoiceID = req.query.invoiceID;

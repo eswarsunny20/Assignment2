@@ -54,10 +54,17 @@
         </thead>
         <tbody>
             {{#each salesData}}
-            <tr {{#if (eq this.Rating 0)}}class="highlight-zero"{{/if}} >
-                {{> tableRow invoiceID=this.[Invoice ID] branch=this.Branch city=this.City customerType=this.[Customer type] productLine=this.[Product line] name=this.name rating=this.Rating}}
-            </tr>
+                <tr {{#if (eq this.Rating 0)}}class="highlight-zero"{{/if}}>
+                    <td>{{this.[Invoice ID]}}</td>
+                    <td>{{this.Branch}}</td>
+                    <td>{{this.City}}</td>
+                    <td>{{this.[Customer type]}}</td>
+                    <td>{{this.[Product line]}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{highlightZeroRating this.Rating}}</td>
+                </tr>
             {{/each}}
+            
         </tbody>
     </table>
 </body>
